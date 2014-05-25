@@ -2,7 +2,7 @@
   (:require [clojure.string :refer [split]]))
 
 (def wovels (set "aouåeiyäö"))
-(def wovel-rule-ending "way")
+(def pig-latin-postfix "ay")
 
 (defn alpha? [c]
   (re-matches #"[a-öA-Ö]" (str c)))
@@ -13,16 +13,14 @@
 (defn consonant? [c]
   (and (not (wovel? c)) (alpha? c)))
 
-(defn test-first-elem [pred s]
-  (pred (first s)))
-
-(def starts-with-wovel? (partial test-first-elem wovel?))
-
-(def starts-with-consonant? (partial test-first-elem consonant?))
-
 (defn split-to-words [s]
   (filter not-empty (split s #" +")))
 
-(defn apply-wovel-rule [s]
-  {:pre [(starts-with-wovel? s)]}
-  (str s wovel-rule-ending))
+(defn pig-latin-word [s]
+  (let [[leading-cons rest] (split-with consonant? s)]
+    (apply str (flatten [rest leading-cons pig-latin-postfix]))))
+
+(defn pig-latin [s]
+  (let [words (split-to-words s)
+        words-in-pig-latin (map pig-latin-word words)]
+    (apply str (interpose " " words-in-pig-latin))))

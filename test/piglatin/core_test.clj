@@ -17,29 +17,20 @@
   (is (alpha? \a))
   (is (not (alpha? \#))))
 
-(deftest test-first-elem-test
-  (is (test-first-elem odd? [1 2 3]))
-  (is (test-first-elem (partial = \a) "abc")))
-
-(deftest starts-with-wovel?-test
-  (testing "Test if word starts with wovel"
-    (is (starts-with-wovel? "apa"))
-    (is (not (starts-with-wovel? "banan")))
-    (is (not (starts-with-wovel? "")))
-    (is (not (starts-with-wovel? "---")))))
-
-(deftest starts-with-consonant?-test
-  (is (starts-with-consonant? "bapelsin"))
-  (is (not (starts-with-consonant? "apelsin")))
-  (is (not (starts-with-consonant? "")))
-  (is (not (starts-with-consonant? "/citron"))))
-
 (deftest split-to-words-test
   (is (empty? (split-to-words "")))
   (is (= ["apan"] (split-to-words "apan")))
   (is (= ["knatte" "fnatte" "tjatte"] (split-to-words "knatte fnatte tjatte")))
   (is (= ["a" "b" "c"] (split-to-words "  a  b  c  "))))
 
-(deftest apply-wovel-rule-test
-  (is (thrown? AssertionError (apply-wovel-rule "banan")))
-  (is (= "away" (apply-wovel-rule "a"))))
+(deftest pig-latin-word-test
+  (is (= "abay" (pig-latin-word "ba")))
+  (is (= "aay" (pig-latin-word "a")))
+  (is (= "cay" (pig-latin-word "c")))
+  (is (= "abcay" (pig-latin-word "abc")))
+  (is (= "igpay" (pig-latin-word "pig")))
+  (is (= "apeay" (pig-latin-word "ape"))))
+
+(deftest pig-latin-test
+  (is (= "isnodebay attarfay artasmay eslutbay" 
+         (pig-latin "bisnode fattar smarta beslut"))))

@@ -7,10 +7,8 @@ consonant?
 
 alpha?
 
-starts-with-wovel?
+pig-latin-word
 
-starts-with-consonant?
+split-to-words
 
-test-first-elem
-
-apply-wovel-rule
+pig-latin
